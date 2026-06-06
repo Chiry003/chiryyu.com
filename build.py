@@ -266,7 +266,8 @@ for f in files:
     body_md = re.sub(r'^---\s*$', '', body_md, flags=re.MULTILINE)
     body_md = re.sub(r'\|', ' ', body_md)
 
-    toc = extract_toc(body_md)
+    body_normalized = normalize_markdown(body_md)
+    toc = extract_toc(body_normalized)
     toc_html = generate_toc_html(toc)
     body_html = md_to_html(body_md)
 

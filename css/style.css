@@ -1,0 +1,253 @@
+/* ===== 余驰宇律师 - 跨境投资法律实务 ===== */
+:root {
+  --navy: #1A2332;
+  --gold: #C9A962;
+  --gold-dark: #A0823E;
+  --white: #F5F5F7;
+  --gray-100: #EEEEF0;
+  --gray-200: #D0D0D5;
+  --gray-400: #888892;
+  --gray-600: #555560;
+  --gray-800: #2A2A35;
+  --blue-accent: #3C64A0;
+  --max-width: 800px;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; font-size: 17px; }
+
+body {
+  font-family: var(--font-sans);
+  color: var(--gray-800);
+  background: #FAFAFC;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== Header ===== */
+.site-header {
+  background: var(--navy);
+  padding: 1.2rem 0;
+  position: sticky; top: 0; z-index: 100;
+  border-bottom: 3px solid var(--gold);
+}
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+.site-title span { color: var(--gold); font-weight: 400; }
+.site-nav a {
+  color: var(--gray-200);
+  text-decoration: none;
+  margin-left: 1.8rem;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+.site-nav a:hover, .site-nav a.active { color: var(--gold); }
+
+/* ===== Hero ===== */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #243450 100%);
+  color: var(--white);
+  padding: 5rem 1.5rem 4rem;
+  text-align: center;
+}
+.hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.8rem; }
+.hero h1 span { color: var(--gold); }
+.hero .subtitle {
+  font-size: 1.05rem;
+  color: var(--gray-200);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+.hero .regions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+.hero .region-tag {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--gold);
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+.hero .stats {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  font-size: 0.85rem;
+  color: var(--gray-400);
+}
+
+/* ===== Main content ===== */
+.main-content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+/* ===== Article cards ===== */
+.section-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--gold);
+}
+
+.article-card {
+  display: block;
+  background: #fff;
+  border: 1px solid var(--gray-100);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+.article-card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
+}
+.article-card .card-meta {
+  font-size: 0.8rem;
+  color: var(--gold-dark);
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.article-card .card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.4rem;
+  line-height: 1.5;
+}
+.article-card .card-desc {
+  font-size: 0.88rem;
+  color: var(--gray-400);
+  line-height: 1.5;
+}
+
+/* ===== Article page ===== */
+.article-header {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 3rem 1.5rem 1rem;
+}
+.article-region {
+  font-size: 0.8rem;
+  color: var(--gold-dark);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.article-header h1 {
+  font-size: 1.6rem;
+  color: var(--navy);
+  margin: 0.5rem 0;
+  line-height: 1.4;
+}
+.article-meta {
+  font-size: 0.85rem;
+  color: var(--gray-400);
+  margin-top: 0.5rem;
+}
+
+.article-body {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+}
+.article-body h2 {
+  font-size: 1.2rem;
+  color: var(--navy);
+  margin: 2rem 0 0.8rem;
+  padding-top: 0.5rem;
+}
+.article-body h3 {
+  font-size: 1.05rem;
+  color: var(--gray-600);
+  margin: 1.5rem 0 0.5rem;
+}
+.article-body p {
+  margin-bottom: 0.8rem;
+  text-indent: 2em;
+}
+.article-body p:first-of-type { text-indent: 0; }
+.article-body ul, .article-body ol {
+  margin: 0.5rem 0 1rem 1.5rem;
+}
+.article-body li { margin-bottom: 0.3rem; }
+
+/* ===== About ===== */
+.about-hero {
+  background: var(--navy);
+  color: var(--white);
+  padding: 4rem 1.5rem;
+  text-align: center;
+}
+.about-hero h1 { font-size: 1.6rem; margin-bottom: 0.5rem; }
+.about-content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+.about-content h2 {
+  font-size: 1.2rem;
+  color: var(--navy);
+  margin: 2rem 0 1rem;
+}
+.about-content ul { margin-left: 1.5rem; }
+.about-content li { margin-bottom: 0.4rem; }
+
+/* ===== Footer ===== */
+.site-footer {
+  background: var(--navy);
+  color: var(--gray-400);
+  text-align: center;
+  padding: 2rem 1.5rem;
+  font-size: 0.85rem;
+  margin-top: 3rem;
+}
+.site-footer a { color: var(--gold); text-decoration: none; }
+
+/* ===== Schema hidden (for SEO only) ===== */
+.schema-hidden { display: none; }
+
+/* ===== Responsive ===== */
+@media (max-width: 640px) {
+  html { font-size: 15px; }
+  .hero { padding: 3rem 1rem 2rem; }
+  .hero h1 { font-size: 1.5rem; }
+  .header-inner { flex-direction: column; gap: 0.5rem; }
+  .site-nav a { margin-left: 1rem; font-size: 0.82rem; }
+  .hero .stats { flex-direction: column; gap: 0.3rem; align-items: center; }
+  .article-header h1 { font-size: 1.3rem; }
+}
+
+/* ===== Print ===== */
+@media print {
+  .site-header, .site-footer, .hero { display: none; }
+  .article-body { max-width: 100%; }
+}

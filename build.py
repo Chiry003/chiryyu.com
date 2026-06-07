@@ -228,6 +228,7 @@ HTML_ARTICLE = '''<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="baidu-site-verification" content="codeva-clmOQd5j7H" />
 <title>{title} | 余驰宇律师</title>
 <meta name="description" content="{desc}">
 <meta name="keywords" content="{region}法律,{tag},跨境投资,余驰宇律师">
@@ -365,6 +366,7 @@ with open(os.path.join(ARTICLES_OUT, 'index.html'), 'w', encoding='utf-8') as fh
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="baidu-site-verification" content="codeva-clmOQd5j7H" />
 <title>文章列表 | 余驰宇律师</title>
 <meta name="description" content="余驰宇律师跨境投资法律实务文章合集，覆盖泰柬马罗越印六国。">
 <link rel="stylesheet" href="/css/style.css">
@@ -395,6 +397,7 @@ with open(os.path.join(SITE_DIR, 'about.html'), 'w', encoding='utf-8') as fh:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="baidu-site-verification" content="codeva-clmOQd5j7H" />
 <title>关于 | 余驰宇律师</title>
 <meta name="description" content="余驰宇，中国执业律师，专注跨境投资法律实务。">
 <link rel="stylesheet" href="/css/style.css">

@@ -237,7 +237,7 @@ HTML_ARTICLE = '''<!DOCTYPE html>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNSF9MHKRC"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag(){{dataLayer.push(arguments);}}
   gtag('js', new Date());
   gtag('config', 'G-RNSF9MHKRC');
 </script>
@@ -392,7 +392,7 @@ with open(os.path.join(SITE_DIR, 'about.html'), 'w', encoding='utf-8') as fh:
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNSF9MHKRC"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag(){{dataLayer.push(arguments);}}
   gtag('js', new Date());
   gtag('config', 'G-RNSF9MHKRC');
 </script>

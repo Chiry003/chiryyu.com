@@ -234,6 +234,13 @@ HTML_ARTICLE = '''<!DOCTYPE html>
 <meta name="author" content="余驰宇">
 <link rel="canonical" href="https://chiryyu.com/articles/{slug}.html">
 <link rel="stylesheet" href="/css/style.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RNSF9MHKRC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RNSF9MHKRC');
+</script>
 <script type="application/ld+json">
 {{
   "@context": "https://schema.org",
@@ -382,6 +389,13 @@ with open(os.path.join(SITE_DIR, 'about.html'), 'w', encoding='utf-8') as fh:
 <title>关于 | 余驰宇律师</title>
 <meta name="description" content="余驰宇，中国执业律师，专注跨境投资法律实务。">
 <link rel="stylesheet" href="/css/style.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RNSF9MHKRC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RNSF9MHKRC');
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",

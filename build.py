@@ -241,6 +241,15 @@ HTML_ARTICLE = '''<!DOCTYPE html>
   gtag('js', new Date());
   gtag('config', 'G-RNSF9MHKRC');
 </script>
+<script>
+var _hmt = _hmt || [];
+(function() {{
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4f699fb9163cce274dc69ba8316bb3e8";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+}})();
+</script>
 <script type="application/ld+json">
 {{
   "@context": "https://schema.org",
@@ -395,6 +404,15 @@ with open(os.path.join(SITE_DIR, 'about.html'), 'w', encoding='utf-8') as fh:
   function gtag(){{dataLayer.push(arguments);}}
   gtag('js', new Date());
   gtag('config', 'G-RNSF9MHKRC');
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {{
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?4f699fb9163cce274dc69ba8316bb3e8";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+}})();
 </script>
 <script type="application/ld+json">
 {

@@ -417,7 +417,7 @@ with open(os.path.join(SITE_DIR, 'about.html'), 'w', encoding='utf-8') as fh:
   <h2>联系方式</h2>
   <p>📞 电话：<a href="tel:+8615201911206">15201911206</a></p>
   <p>💬 微信：<strong>chiry003</strong></p>
-  <p>网站：<a href="https://chiryyu.com">chiryyu.com</a></p>
+  <p>网站：<a href="https://shanghai.dacheng.com/lawyer_1/43.html">大成律师事务所</a></p>
 </main>
 <footer class="site-footer">
   <p>© 2026 余驰宇律师 · <a href="/">chiryyu.com</a></p>

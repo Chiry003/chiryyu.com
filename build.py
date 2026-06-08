@@ -285,7 +285,8 @@ def md_to_html(text):
         line = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', line)
         if re.match(r'^\d+[\.\、]', line):
             if not in_ol: close_lists(); html.append('<ol>'); in_ol = True
-            html.append(f'<li>{re.sub(r"^\d+[\.\、]\s*", "", line)}</li>')
+            cleaned = re.sub(r'^\d+[\.\、]\s*', '', line)
+            html.append(f'<li>{cleaned}</li>')
             continue
         if line.startswith('- '):
             if not in_ul: close_lists(); html.append('<ul>'); in_ul = True

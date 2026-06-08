@@ -3,5 +3,13 @@ Allow: /
 Sitemap: https://chiryyu.com/sitemap.xml
 User-agent: GPTBot
 Allow: /
+User-agent: CCBot
+Allow: /
 User-agent: anthropic-ai
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Bytespider
+Allow: /
+User-agent: Baiduspider
 Allow: /

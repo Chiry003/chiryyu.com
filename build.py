@@ -472,6 +472,17 @@ HTML_ARTICLE = '''<!DOCTYPE html>
 <meta name="keywords" content="{region}法律,{tag},跨境投资,余驰宇律师">
 <meta name="author" content="余驰宇">
 <link rel="canonical" href="https://chiryyu.com/articles/{slug}.html">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:image" content="https://chiryyu.com/images/{cover}">
+<meta property="og:url" content="https://chiryyu.com/articles/{slug}.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="余驰宇律师 | 跨境投资法律实务">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{title}">
+<meta name="twitter:description" content="{desc}">
+<meta name="twitter:image" content="https://chiryyu.com/images/{cover}">
 <link rel="stylesheet" href="/css/style.css">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNSF9MHKRC"></script>
 <script>
@@ -495,11 +506,24 @@ var _hmt = _hmt || [];
   "@type": "Article",
   "headline": "{title}",
   "description": "{desc}",
-  "author": {{ "@type": "Person", "name": "余驰宇", "url": "https://chiryyu.com" }},
+  "image": "https://chiryyu.com/images/{cover}",
+  "author": {{ "@type": "Person", "name": "余驰宇", "url": "https://chiryyu.com", "image": "https://chiryyu.com/images/avatar.png" }},
   "datePublished": "{date}T08:00:00+08:00",
   "dateModified": "{date}T08:00:00+08:00",
   "publisher": {{ "@type": "Person", "name": "余驰宇" }},
-  "mainEntityOfPage": {{ "@type": "WebPage", "@id": "https://chiryyu.com/articles/{slug}.html" }}
+  "mainEntityOfPage": {{ "@type": "WebPage", "@id": "https://chiryyu.com/articles/{slug}.html" }},
+  "articleSection": "{region} · {tag}"
+}}
+</script>
+<script type="application/ld+json">
+{{
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[
+    {{"@type":"ListItem","position":1,"name":"首页","item":"https://chiryyu.com/"}},
+    {{"@type":"ListItem","position":2,"name":"文章","item":"https://chiryyu.com/articles/"}},
+    {{"@type":"ListItem","position":3,"name":"{title}"}}
+  ]
 }}
 </script>
 {faq_schema}
@@ -519,15 +543,24 @@ var _hmt = _hmt || [];
 
 <article>
   <header class="article-header">
+    <nav class="breadcrumb"><a href="/">首页</a> › <a href="/articles/">文章</a> › <span>{region} · {tag}</span></nav>
+    <img src="/images/{cover}" alt="{title}" class="article-cover" width="800" height="450" loading="lazy">
     <div class="article-region">{region} · {tag}</div>
     <h1>{title}</h1>
-    <div class="article-meta">余驰宇 · {date}</div>
+    <div class="article-meta">余驰宇 · {date} · 阅读约{readtime}分钟</div>
   </header>
   <div class="article-body">
 <div class="article-summary">{desc}</div>
 {toc}
 {body}
 {related}
+  </div>
+  <div class="author-bio">
+    <img src="/images/avatar.png" alt="余驰宇律师" class="author-avatar" width="80" height="80">
+    <div class="author-info">
+      <strong>余驰宇</strong>，中国执业律师，大成律师事务所，牵头柬埔寨、泰国、马来西亚、罗马尼亚等国当地律所的中国业务部。专注中资企业海外财产保护、重大诉讼/仲裁、税务问题处理、跨境保全与执行。
+      <div class="author-contact">📞 <a href="tel:+8615201911206">15201911206</a> · 微信 chiry003</div>
+    </div>
   </div>
 </article>
 
@@ -567,6 +600,14 @@ for f in files:
     body_md = re.sub(r'^---\s*$', '', body_md, flags=re.MULTILINE)
     body_md = re.sub(r'\|', ' ', body_md)
 
+    # Extract article number for cover image
+    article_num = re.match(r'(\d+)', f)
+    cover = f'{article_num.group(1)}_cover.png' if article_num else '01_cover.png'
+
+    # Estimate reading time (Chinese ~400 chars/min)
+    char_count = len(raw)
+    readtime = max(1, round(char_count / 400))
+
     body_normalized = normalize_markdown(body_md)
     toc = extract_toc(body_normalized)
     toc_html = generate_toc_html(toc)
@@ -576,7 +617,8 @@ for f in files:
 
     html = HTML_ARTICLE.format(
         title=title, desc=desc, region=region, tag=tag,
-        date=date, slug=slug, toc=toc_html, body=body_html,
+        date=date, slug=slug, cover=cover, readtime=readtime,
+        toc=toc_html, body=body_html,
         faq_schema=faq_schema, related=related_html,
     )
 
@@ -608,8 +650,18 @@ with open(os.path.join(ARTICLES_OUT, 'index.html'), 'w', encoding='utf-8') as fh
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="baidu-site-verification" content="codeva-clmOQd5j7H" />
-<title>文章列表 | 余驰宇律师</title>
-<meta name="description" content="余驰宇律师跨境投资法律实务文章合集，覆盖泰柬马罗越印六国。">
+<title>跨境投资法律实务文章合集 | 余驰宇律师</title>
+<meta name="description" content="余驰宇律师跨境投资法律实务文章合集，覆盖泰国、柬埔寨、马来西亚、罗马尼亚、越南、印尼六国，共{len(files)}篇专业深度分析。">
+<meta property="og:title" content="跨境投资法律实务文章合集 | 余驰宇律师">
+<meta property="og:description" content="覆盖泰柬马罗越印六国，{len(files)}篇跨境投资法律深度文章。">
+<meta property="og:image" content="https://chiryyu.com/images/01_cover.png">
+<meta property="og:url" content="https://chiryyu.com/articles/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="余驰宇律师 | 跨境投资法律实务">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="跨境投资法律实务文章合集 | 余驰宇律师">
+<meta name="twitter:description" content="覆盖泰柬马罗越印六国，{len(files)}篇跨境投资法律深度文章。">
+<meta name="twitter:image" content="https://chiryyu.com/images/01_cover.png">
 <link rel="stylesheet" href="/css/style.css">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNSF9MHKRC"></script>
 <script>
@@ -655,8 +707,18 @@ with open(os.path.join(SITE_DIR, 'about.html'), 'w', encoding='utf-8') as fh:
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="baidu-site-verification" content="codeva-clmOQd5j7H" />
-<title>关于 | 余驰宇律师</title>
-<meta name="description" content="余驰宇，中国执业律师，专注跨境投资法律实务。">
+<title>关于余驰宇律师 | 上海涉外律师 · 跨境投资法律实务</title>
+<meta name="description" content="余驰宇，中国执业律师，大成律师事务所，专注东南亚与东欧跨境投资法律实务。覆盖泰国、柬埔寨、马来西亚、罗马尼亚、越南、印尼六国。电话：15201911206。">
+<meta property="og:title" content="余驰宇律师 | 上海涉外律师 · 跨境投资法律实务">
+<meta property="og:description" content="中国执业律师，大成律师事务所，专注东南亚与东欧跨境投资法律实务，覆盖泰柬马罗越印六国。">
+<meta property="og:image" content="https://chiryyu.com/images/avatar.png">
+<meta property="og:url" content="https://chiryyu.com/about.html">
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="余驰宇律师 | 跨境投资法律实务">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="余驰宇律师 | 上海涉外律师">
+<meta name="twitter:description" content="中国执业律师，专注东南亚与东欧跨境投资法律实务。">
+<meta name="twitter:image" content="https://chiryyu.com/images/avatar.png">
 <link rel="stylesheet" href="/css/style.css">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RNSF9MHKRC"></script>
 <script>
@@ -678,11 +740,15 @@ var _hmt = _hmt || [];
 {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": "余驰宇", "jobTitle": "律师",
+  "name": "余驰宇",
+  "jobTitle": "律师",
   "description": "中国执业律师，专注跨境投资法律实务",
-  "url": "https://chiryyu.com", "telephone": "+8615201911206",
-  "knowsAbout": ["跨境投资法","泰国法律","柬埔寨法律","马来西亚法律","罗马尼亚法律","国际仲裁","税务合规"],
-  "address": {"@type":"PostalAddress","addressLocality":"上海","addressCountry":"CN"}
+  "url": "https://chiryyu.com",
+  "image": "https://chiryyu.com/images/avatar.png",
+  "telephone": "+8615201911206",
+  "affiliation": {{ "@type": "Organization", "name": "大成律师事务所", "url": "https://shanghai.dacheng.com/lawyer_1/43.html" }},
+  "knowsAbout": ["跨境投资法","泰国法律","柬埔寨法律","马来西亚法律","罗马尼亚法律","越南法律","印尼法律","国际仲裁","税务合规"],
+  "address": {{"@type":"PostalAddress","addressLocality":"上海","addressCountry":"CN"}}
 }
 </script>
 </head>
@@ -693,19 +759,22 @@ var _hmt = _hmt || [];
     <nav class="site-nav"><a href="/">首页</a><a href="/articles/">文章</a><a href="/about.html" class="active">关于</a></nav>
   </div>
 </header>
-<section class="about-hero"><h1>余驰宇</h1><p>中国执业律师 · 跨境投资法律实务</p></section>
+<section class="about-hero">
+  <img src="/images/avatar.png" alt="余驰宇律师" class="about-avatar" width="120" height="120">
+  <h1>余驰宇</h1><p>中国执业律师 · 跨境投资法律实务</p>
+</section>
 <main class="about-content">
   <h2>执业领域</h2>
-  <p>余驰宇，中国执业律师，牵头柬埔寨、泰国、马来西亚、罗马尼亚等国当地律所的中国业务部，专注中资企业海外财产保护、重大诉讼/仲裁、税务问题处理、跨境保全与执行。</p>
+  <p>余驰宇，中国执业律师，大成律师事务所，牵头柬埔寨、泰国、马来西亚、罗马尼亚等国当地律所的中国业务部，专注中资企业海外财产保护、重大诉讼/仲裁、税务问题处理、跨境保全与执行。</p>
   <h2>覆盖法域</h2>
   <ul>
-    <li><strong>柬埔寨</strong> — QIP投资法、税务制度、土地法、劳动法、知识产权、外汇管理、环境法、经济特区、数字经济、破产法、建筑施工、赌场牌照</li>
-    <li><strong>泰国</strong> — BOI投资、税务争议、M&A并购、PDPA数据合规、破产重整、工厂法、刑事辩护、EPC工程、反洗钱法</li>
-    <li><strong>马来西亚</strong> — AMLA反洗钱、竞争法并购管制、PDPA数据合规、土地法、特许经营、中国仲裁执行</li>
-    <li><strong>罗马尼亚</strong> — GDPR数据保护、劳动法、民事诉讼、储能投资、外资审查、国家援助规则</li>
-    <li><strong>越南</strong> — 投资法外资准入、劳动法、数据本地化、跨境传输合规</li>
-    <li><strong>印尼</strong> — Omnibus综合法、IKN新首都投资、外资准入</li>
-    <li><strong>跨境</strong> — ODI备案全流程、东盟六国仲裁、一带一路风险地图</li>
+    <li><strong>柬埔寨</strong> — QIP投资法、税务制度、土地法、劳动法、知识产权、外汇管理、环境法、经济特区、数字经济、破产法、建筑施工、银行金融监管、赌场牌照</li>
+    <li><strong>泰国</strong> — BOI投资、税务争议、M&A并购、PDPA数据合规、破产重整、工厂法、工作签证社保、外国人购房、刑事辩护、EPC工程、反洗钱法</li>
+    <li><strong>马来西亚</strong> — AMLA反洗钱、竞争法并购管制、PDPA数据合规、劳动法外籍员工、土地法、特许经营、中国仲裁执行</li>
+    <li><strong>罗马尼亚</strong> — GDPR数据保护、劳动法、公司法外商投资、民事诉讼、储能投资、外资审查、国家援助规则</li>
+    <li><strong>越南</strong> — 投资法外资准入、劳动法、税务转让定价、数据本地化、跨境传输合规</li>
+    <li><strong>印尼</strong> — Omnibus综合法、IKN新首都投资、PDP数据保护法、外资准入</li>
+    <li><strong>跨境</strong> — ODI备案全流程、双边税收协定税务筹划、FIDIC国际工程合同、东盟跨境电商合规、东盟六国仲裁、一带一路风险地图</li>
   </ul>
   <h2>联系方式</h2>
   <p>📞 电话：<a href="tel:+8615201911206">15201911206</a></p>
@@ -741,14 +810,19 @@ Allow: /
 print('  ✅ robots.txt')
 
 # ===== sitemap =====
-urls = ['https://chiryyu.com/', 'https://chiryyu.com/about.html', 'https://chiryyu.com/articles/']
+urls = [
+    ('https://chiryyu.com/', 'weekly', '1.0', '2026-06-22'),
+    ('https://chiryyu.com/about.html', 'monthly', '0.8', '2026-06-22'),
+    ('https://chiryyu.com/articles/', 'weekly', '0.9', '2026-06-22'),
+]
 for f in files:
     meta = META.get(f, {})
-    urls.append(f"https://chiryyu.com/articles/{meta.get('slug', '')}.html")
+    date = meta.get('date', '2026-06-01')
+    urls.append((f"https://chiryyu.com/articles/{meta.get('slug', '')}.html", 'monthly', '0.7', date))
 with open(os.path.join(SITE_DIR, 'sitemap.xml'), 'w') as fh:
     fh.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
-    for url in urls:
-        fh.write(f'  <url><loc>{url}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>\n')
+    for url, freq, pri, lastmod in urls:
+        fh.write(f'  <url><loc>{url}</loc><lastmod>{lastmod}</lastmod><changefreq>{freq}</changefreq><priority>{pri}</priority></url>\n')
     fh.write('</urlset>\n')
 print('  ✅ sitemap.xml')
 

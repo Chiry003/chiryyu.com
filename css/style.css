@@ -199,6 +199,7 @@ body {
 }
 
 /* ===== About ===== */
+.about-avatar { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--gold-dark); margin-bottom: 1.5rem; }
 .about-hero {
   background: var(--navy); color: var(--white);
   padding: 4rem 1.5rem; text-align: center;
@@ -271,8 +272,25 @@ body {
 }
 .related-articles a:hover { color: var(--gold-dark); }
 
+/* ===== Breadcrumb ===== */
+.breadcrumb { font-size: 0.85rem; color: var(--gray-400); margin-bottom: 1rem; }
+.breadcrumb a { color: var(--gold-dark); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+
+/* ===== Cover Image ===== */
+.article-cover { width: 100%; max-width: 800px; height: auto; border-radius: 8px; margin-bottom: 1.5rem; display: block; }
+
+/* ===== Author Bio ===== */
+.author-bio { display: flex; gap: 1.25rem; align-items: flex-start; margin-top: 3rem; padding: 1.5rem; background: var(--gray-800); border-radius: 8px; border-left: 3px solid var(--gold-dark); }
+.author-avatar { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--gold-dark); flex-shrink: 0; }
+.author-info { font-size: 0.95rem; line-height: 1.7; color: var(--gray-300); }
+.author-info strong { color: var(--gold); font-size: 1.05rem; }
+.author-contact { margin-top: 0.5rem; color: var(--gray-400); font-size: 0.9rem; }
+.author-contact a { color: var(--gold-dark); text-decoration: none; }
+
 /* ===== Print ===== */
 @media print {
   .site-header, .site-footer, .hero, .article-toc { display: none; }
   .article-body { max-width: 100%; font-size: 12pt; }
+  .author-bio { border: 1px solid #ccc; background: #f9f9f9; break-inside: avoid; }
 }

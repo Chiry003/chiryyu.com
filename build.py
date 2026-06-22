@@ -685,7 +685,7 @@ for f in files:
     with open(path, 'r', encoding='utf-8') as fh:
         title = fh.readline().replace('# ', '').strip()
     card = f'''    <a href="/articles/{slug}.html" class="article-card">
-      <div class="card-meta">{region} · {meta.get('tag','')}</div>
+      <div class="card-meta">{region} · {meta.get('tag','')}<span class="card-date">{meta.get('date','')}</span></div>
       <div class="card-title">{title}</div>
       <div class="card-desc">{desc}</div>
     </a>'''

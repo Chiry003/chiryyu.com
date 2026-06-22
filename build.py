@@ -469,7 +469,7 @@ HTML_ARTICLE = '''<!DOCTYPE html>
 <meta name="baidu-site-verification" content="codeva-clmOQd5j7H" />
 <title>{title} | 余驰宇律师</title>
 <meta name="description" content="{desc}">
-<meta name="keywords" content="{region}法律,{tag},跨境投资,余驰宇律师">
+<meta name="keywords" content="{region}法律,{tag},跨境投资,余驰宇律师,上海涉外律师,境外投资,海外合规,中国企业出海,涉外法律服务,东南亚投资">
 <meta name="author" content="余驰宇">
 <link rel="canonical" href="https://chiryyu.com/articles/{slug}.html">
 <meta property="og:title" content="{title}">
@@ -629,19 +629,34 @@ for f in files:
 
 
 # ===== Articles Index =====
-cards = []
+REGION_ORDER = ['柬埔寨', '泰国', '马来西亚', '罗马尼亚', '越南', '印尼', '东盟', '跨境']
+region_groups = {r: [] for r in REGION_ORDER}
 for f in files:
     meta = META.get(f, {})
     slug = meta.get('slug', '')
     desc = meta.get('desc', '')
+    region = meta.get('region', '跨境')
     path = os.path.join(ARTICLES_DIR, f)
     with open(path, 'r', encoding='utf-8') as fh:
         title = fh.readline().replace('# ', '').strip()
-    cards.append(f'''    <a href="/articles/{slug}.html" class="article-card">
-      <div class="card-meta">{meta.get('region','')} · {meta.get('tag','')}</div>
+    card = f'''    <a href="/articles/{slug}.html" class="article-card">
+      <div class="card-meta">{region} · {meta.get('tag','')}</div>
       <div class="card-title">{title}</div>
       <div class="card-desc">{desc}</div>
-    </a>''')
+    </a>'''
+    if region in region_groups:
+        region_groups[region].append(card)
+    else:
+        region_groups['跨境'].append(card)
+
+cards_html = ''
+region_counts = []
+for r in REGION_ORDER:
+    if region_groups[r]:
+        count = len(region_groups[r])
+        region_counts.append(f'{r}({count}篇)')
+        cards_html += f'<h3 class="region-heading">{r} · {count} 篇</h3>\n'
+        cards_html += '\n'.join(region_groups[r]) + '\n'
 
 with open(os.path.join(ARTICLES_OUT, 'index.html'), 'w', encoding='utf-8') as fh:
     fh.write(f'''<!DOCTYPE html>
@@ -689,7 +704,8 @@ var _hmt = _hmt || [];
 </header>
 <main class="main-content">
   <h2 class="section-title">全部文章（共 {len(files)} 篇）</h2>
-{chr(10).join(cards)}
+  <p class="region-summary">{' · '.join(region_counts)}</p>
+{cards_html}
 </main>
 <footer class="site-footer">
   <p>© 2026 余驰宇律师 · <a href="/">chiryyu.com</a></p>

@@ -6,6 +6,7 @@ import os, re, json
 ARTICLES_DIR = '/Users/chiryyu/Documents/涉外律师/新文章'
 SITE_DIR = '/Users/chiryyu/Documents/涉外律师/website'
 ARTICLES_OUT = os.path.join(SITE_DIR, 'articles')
+LAST_UPDATED = '2026-08-17'
 os.makedirs(ARTICLES_OUT, exist_ok=True)
 
 META = {
@@ -843,7 +844,7 @@ var _hmt = _hmt || [];
   "image": "https://chiryyu.com/images/{cover}",
   "author": {{ "@type": "Person", "name": "余驰宇", "alternateName": "Yu Chiyu", "url": "https://chiryyu.com/about.html", "image": "https://chiryyu.com/images/avatar.png", "jobTitle": "中国执业律师", "description": "跨境投资律师，专注柬埔寨、泰国、马来西亚、罗马尼亚等国法律实务", "sameAs": ["https://chiryyu.com/about.html", "https://shanghai.dacheng.com/lawyer_1/43.html"] }},
   "datePublished": "{date}T08:00:00+08:00",
-  "dateModified": "{date}T08:00:00+08:00",
+  "dateModified": "{last_updated}T08:00:00+08:00",
   "publisher": {{ "@type": "Person", "name": "余驰宇" }},
   "mainEntityOfPage": {{ "@type": "WebPage", "@id": "https://chiryyu.com/articles/{slug}.html" }},
   "articleSection": "{region} · {tag}"
@@ -952,7 +953,7 @@ for f in files:
 
     html = HTML_ARTICLE.format(
         title=title, desc=desc, region=region, tag=tag,
-        date=date, slug=slug, cover=cover, readtime=readtime,
+        date=date, last_updated=LAST_UPDATED, slug=slug, cover=cover, readtime=readtime,
         toc=toc_html, body=body_html,
         faq_schema=faq_schema, related=related_html,
     )
@@ -1187,6 +1188,9 @@ urls = [
     ('https://chiryyu.com/', 'weekly', '1.0', '2026-06-22'),
     ('https://chiryyu.com/about.html', 'monthly', '0.8', '2026-06-22'),
     ('https://chiryyu.com/cambodia-lawyer.html', 'weekly', '0.9', '2026-08-17'),
+    ('https://chiryyu.com/thailand-lawyer.html', 'weekly', '0.9', '2026-08-17'),
+    ('https://chiryyu.com/malaysia-lawyer.html', 'weekly', '0.9', '2026-08-17'),
+    ('https://chiryyu.com/crossborder-lawyer.html', 'weekly', '0.9', '2026-08-17'),
     ('https://chiryyu.com/articles/', 'weekly', '0.9', '2026-06-22'),
 ]
 for f in files:

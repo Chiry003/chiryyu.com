@@ -155,7 +155,41 @@ body {
 }
 
 /* ===== Region Headings ===== */
-.region-summary { text-align: center; color: var(--gray-400); font-size: 0.88rem; margin-bottom: 2rem; }
+.region-summary { text-align: center; color: var(--gray-400); font-size: 0.88rem; margin-bottom: 1rem; }
+
+/* Tag cloud */
+.tag-cloud { text-align: center; margin: 1rem 0 1.5rem; line-height: 2.2; }
+.tag-pill {
+  display: inline-block; padding: 0.2rem 0.8rem; margin: 0.15rem 0.3rem;
+  background: var(--navy-light); color: var(--gray-200);
+  border-radius: 20px; font-size: 0.85rem; text-decoration: none;
+  border: 1px solid var(--gray-700); transition: all 0.2s;
+}
+.tag-pill:hover { background: var(--gold-dark); color: var(--navy); border-color: var(--gold-dark); }
+.tag-count { font-size: 0.72rem; color: var(--gray-500); margin-left: 0.25rem; }
+.tag-pill:hover .tag-count { color: var(--navy); }
+
+/* View toggle */
+.view-btn {
+  display: inline-block; padding: 0.4rem 1.5rem;
+  border: 1px solid var(--gray-600); color: var(--gray-400);
+  text-decoration: none; font-size: 0.9rem; margin: 0 0.3rem; border-radius: 6px;
+  transition: all 0.2s;
+}
+.view-btn.active, .view-btn:hover { background: var(--gold-dark); color: var(--navy); border-color: var(--gold-dark); }
+
+/* Region navigator cards */
+.region-navigator { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; }
+.region-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1rem; margin-top: 1.5rem; }
+.region-card {
+  background: var(--navy-light); border: 1px solid var(--gray-800); border-radius: 12px;
+  padding: 1.2rem; text-decoration: none; color: inherit; transition: all 0.2s;
+}
+.region-card:hover { border-color: var(--gold-dark); transform: translateY(-2px); }
+.region-card strong { display: block; color: var(--gold); font-size: 1.1rem; margin-bottom: 0.3rem; }
+.region-card-count { font-size: 0.8rem; color: var(--gray-500); margin-left: 0.5rem; font-weight: 400; }
+.region-card p { color: var(--gray-400); font-size: 0.85rem; margin: 0; line-height: 1.5; }
+
 .region-heading {
   font-size: 1.1rem; font-weight: 700; color: var(--navy);
   margin: 2.2rem 0 1rem; padding-bottom: 0.5rem;

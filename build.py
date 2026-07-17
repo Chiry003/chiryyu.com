@@ -1023,16 +1023,18 @@ for f in files:
 # ===== Articles Index =====
 REGION_ORDER = ['柬埔寨', '泰国', '马来西亚', '罗马尼亚', '越南', '印尼', '东盟', '跨境']
 region_groups = {r: [] for r in REGION_ORDER}
+tag_groups = {}
 for f in files:
     meta = META.get(f, {})
     slug = meta.get('slug', '')
     desc = meta.get('desc', '')
     region = meta.get('region', '跨境')
+    tag = meta.get('tag', '法律')
     path = os.path.join(ARTICLES_DIR, f)
     with open(path, 'r', encoding='utf-8') as fh:
         title = fh.readline().replace('# ', '').strip()
     card = f'''    <a href="/articles/{slug}.html" class="article-card">
-      <div class="card-meta">{region} · {meta.get('tag','')}<span class="card-date">{meta.get('date','')}</span></div>
+      <div class="card-meta">{region} · {tag}<span class="card-date">{meta.get('date','')}</span></div>
       <div class="card-title">{title}</div>
       <div class="card-desc">{desc}</div>
     </a>'''
@@ -1040,6 +1042,10 @@ for f in files:
         region_groups[region].append(card)
     else:
         region_groups['跨境'].append(card)
+    # Tag groups
+    if tag not in tag_groups:
+        tag_groups[tag] = []
+    tag_groups[tag].append(card)
 
 cards_html = ''
 region_counts = []
@@ -1047,8 +1053,23 @@ for r in REGION_ORDER:
     if region_groups[r]:
         count = len(region_groups[r])
         region_counts.append(f'{r}({count}篇)')
-        cards_html += f'<h3 class="region-heading">{r} · {count} 篇</h3>\n'
+        cards_html += f'<h3 class="region-heading" id="region-{r}">{r} · {count} 篇</h3>\n'
         cards_html += '\n'.join(region_groups[r]) + '\n'
+
+# Tag pills
+tag_pills = ''
+TAG_ORDER = ['投资法','税务合规','数据合规','劳动法','争议解决','刑事合规','数字经济','工程法','并购','公司合规','房地产法','知识产权','行政合规','金融监管','能源法','土地法','环境法','外汇管理','破产重整','反洗钱','公司法','ODI','税务筹划','基础设施','行业准入','贸易法','移民法','农业投资','保险监管','外资审查','地缘投资','刑事辩护','竞争法']
+for t in TAG_ORDER:
+    if t in tag_groups:
+        count = len(tag_groups[t])
+        tag_pills += f'<a href="#tag-{t}" class="tag-pill">{t}<span class="tag-count">{count}</span></a>\n'
+
+# Tag sections
+tag_sections = ''
+for t in TAG_ORDER:
+    if t in tag_groups:
+        tag_sections += f'<h3 class="region-heading" id="tag-{t}">{t} · {len(tag_groups[t])} 篇</h3>\n'
+        tag_sections += '\n'.join(tag_groups[t]) + '\n'
 
 with open(os.path.join(ARTICLES_OUT, 'index.html'), 'w', encoding='utf-8') as fh:
     fh.write(f'''<!DOCTYPE html>
@@ -1097,8 +1118,22 @@ var _hmt = _hmt || [];
 <main class="main-content">
   <h2 class="section-title">全部文章（共 {len(files)} 篇）</h2>
   <p class="region-summary">{' · '.join(region_counts)}</p>
-{cards_html}
+  <div class="tag-cloud">{tag_pills}</div>
+  <div class="view-toggle" style="text-align:center;margin:1.5rem 0 2rem;">
+    <a href="#region-柬埔寨" class="view-btn active" onclick="switchView(event,'region')">按法域浏览</a>
+    <a href="#tag-投资法" class="view-btn" onclick="switchView(event,'tag')">按主题浏览</a>
+  </div>
+  <div id="region-view">{cards_html}</div>
+  <div id="tag-view" style="display:none;">{tag_sections}</div>
 </main>
+<script>
+function switchView(e,view) {{
+  document.querySelectorAll('.view-btn').forEach(function(b){{b.classList.remove('active')}});
+  e.target.classList.add('active');
+  if(view==='region'){{document.getElementById('region-view').style.display='block';document.getElementById('tag-view').style.display='none'}}
+  else{{document.getElementById('region-view').style.display='none';document.getElementById('tag-view').style.display='block'}}
+}}
+</script>
 <footer class="site-footer">
   <p>© 2026 余驰宇律师 · <a href="/">chiryyu.com</a></p>
   <p style="margin-top:0.5rem;">📞 <a href="tel:+8615201911206">15201911206</a> · 微信 chiry003</p>
@@ -1218,6 +1253,179 @@ var _hmt = _hmt || [];
 </body>
 </html>''')
 print('  ✅ about.html')
+
+# ===== Homepage =====
+# Latest 5 articles
+latest_articles = []
+for f in files:
+    meta = META.get(f, {})
+    if not meta: continue
+    date = meta.get('date', '')
+    latest_articles.append((date, meta.get('slug',''), meta.get('region',''), meta.get('tag',''), meta.get('desc',''), f))
+latest_articles.sort(key=lambda x: x[0], reverse=True)
+latest_5 = latest_articles[:5]
+latest_html = ''
+for date, slug, region, tag, desc, fname in latest_5:
+    path = os.path.join(ARTICLES_DIR, fname)
+    title = ''
+    if os.path.exists(path):
+        with open(path, 'r', encoding='utf-8') as fh:
+            title = fh.readline().replace('# ', '').strip()
+    latest_html += f'''    <a href="/articles/{slug}.html" class="article-card">
+      <div class="card-meta">{region} · {tag}<span class="card-date">{date}</span></div>
+      <div class="card-title">{title}</div>
+      <div class="card-desc">{desc}</div>
+    </a>\n'''
+
+# Region nav cards
+LAWYER_PAGES = [
+    ('柬埔寨', '24篇', '/cambodia-lawyer.html', 'QIP申请、土地法、税务、劳动法、经济特区'),
+    ('泰国', '11篇', '/thailand-lawyer.html', 'BOI申请、税务争议、代持化解、PDPA、M&A'),
+    ('马来西亚', '13篇', '/malaysia-lawyer.html', 'JS-SEZ、数据中心、并购管制、PDPA、AMLA'),
+    ('罗马尼亚', '10篇', '/romania-lawyer.html', '欧盟资金、GDPR、可再生能源、乌克兰重建'),
+    ('越南', '7篇', '/vietnam-lawyer.html', '外资准入、数据本地化、税务转让定价、VIAC'),
+    ('印尼', '3篇', '/indonesia-lawyer.html', 'Omnibus综合法、IKN新首都、PDP数据保护'),
+    ('跨境投资', '6篇', '/crossborder-lawyer.html', 'ODI备案、税务筹划、FIDIC工程、国际仲裁'),
+]
+region_nav = ''
+for name, count, url, topics in LAWYER_PAGES:
+    region_nav += f'''      <a href="{url}" class="region-card">
+        <strong>{name}<span class="region-card-count">{count}</span></strong>
+        <p>{topics}</p>
+      </a>\n'''
+
+total = len(files)
+regions_count = len([r for r in REGION_ORDER if region_groups.get(r)])
+
+with open(os.path.join(SITE_DIR, 'index.html'), 'w', encoding='utf-8') as fh:
+    fh.write(f'''<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+<meta name="baidu-site-verification" content="codeva-clmOQd5j7H" />
+<title>余驰宇律师 | 跨境投资法律实务</title>
+<meta name="description" content="余驰宇，中国执业律师，大成律师事务所。覆盖柬埔寨、泰国、马来西亚、罗马尼亚、越南、印尼六国。{total}篇跨境投资法律深度文章。电话15201911206。">
+<meta name="keywords" content="跨境投资律师,柬埔寨律师,泰国律师,马来西亚律师,罗马尼亚律师,越南律师,印尼律师,境外投资法律,海外合规,上海涉外律师,余驰宇">
+<meta name="author" content="余驰宇">
+<link rel="canonical" href="https://chiryyu.com/">
+<meta property="og:title" content="余驰宇律师 | 跨境投资法律实务">
+<meta property="og:description" content="中国执业律师，覆盖六国+跨境，{total}篇深度文章。专注海外财产保护、国际仲裁、税务合规、跨境保全与执行。">
+<meta property="og:image" content="https://chiryyu.com/images/avatar.png">
+<meta property="og:url" content="https://chiryyu.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="余驰宇律师 | 跨境投资法律实务">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/css/style.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RNSF9MHKRC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','G-RNSF9MHKRC');</script>
+<script>var _hmt=_hmt||[];(function(){{var hm=document.createElement("script");hm.src="https://hm.baidu.com/hm.js?4f699fb9163cce274dc69ba8316bb3e8";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s);}})();</script>
+<script type="application/ld+json">
+{{
+  "@context":"https://schema.org",
+  "@type":"Person",
+  "name":"余驰宇","alternateName":["Yu Chiyu","余驰宇律师"],
+  "jobTitle":"中国执业律师","hasCredential":"中国执业律师",
+  "description":"中国执业律师，大成律师事务所，牵头柬埔寨、泰国、马来西亚、罗马尼亚等国当地律所的中国业务部。专注中资企业海外财产保护、重大诉讼/仲裁、税务问题处理、跨境保全与执行。",
+  "url":"https://chiryyu.com","image":"https://chiryyu.com/images/avatar.png","telephone":"+8615201911206",
+  "affiliation":{{"@type":"Organization","name":"大成律师事务所","url":"https://shanghai.dacheng.com/lawyer_1/43.html"}},
+  "memberOf":{{"@type":"Organization","name":"大成律师事务所","url":"https://shanghai.dacheng.com/lawyer_1/43.html"}},
+  "knowsAbout":["柬埔寨律师","泰国律师","马来西亚律师","罗马尼亚律师","跨境投资法","国际仲裁","税务合规","数据保护"],
+  "areaServed":[{{"@type":"Country","name":"柬埔寨"}},{{"@type":"Country","name":"泰国"}},{{"@type":"Country","name":"马来西亚"}},{{"@type":"Country","name":"罗马尼亚"}},{{"@type":"Country","name":"越南"}},{{"@type":"Country","name":"印尼"}},{{"@type":"Country","name":"中国"}}],
+  "knowsLanguage":["zh-CN","en"],
+  "address":{{"@type":"PostalAddress","addressLocality":"上海","addressCountry":"CN"}},
+  "sameAs":["https://shanghai.dacheng.com/lawyer_1/43.html","https://chiryyu.com/about.html"]
+}}
+</script>
+<script type="application/ld+json">
+{{
+  "@context":"https://schema.org",
+  "@type":"Organization",
+  "name":"大成律师事务所","alternateName":"Dacheng Law Offices",
+  "url":"https://shanghai.dacheng.com/lawyer_1/43.html",
+  "member":{{"@type":"Person","name":"余驰宇","jobTitle":"中国执业律师","url":"https://chiryyu.com"}},
+  "address":{{"@type":"PostalAddress","addressLocality":"上海","addressCountry":"CN"}},
+  "contactPoint":{{"@type":"ContactPoint","contactType":"Legal Services","telephone":"+8615201911206","areaServed":["柬埔寨","泰国","马来西亚","罗马尼亚","越南","印尼","中国"]}}
+}}
+</script>
+<script type="application/ld+json">
+{{
+  "@context":"https://schema.org",
+  "@type":"LegalService",
+  "name":"余驰宇律师 | 跨境投资法律实务",
+  "image":"https://chiryyu.com/images/avatar.png",
+  "url":"https://chiryyu.com","telephone":"+8615201911206",
+  "description":"中国执业律师，专注东南亚与东欧跨境投资法律实务。",
+  "address":{{"@type":"PostalAddress","addressLocality":"上海","addressCountry":"CN"}},
+  "areaServed":["柬埔寨","泰国","马来西亚","罗马尼亚","越南","印尼","中国"],
+  "hasCredential":"中国执业律师"
+}}
+</script>
+<script type="application/ld+json">
+{{
+  "@context":"https://schema.org","@type":"WebSite",
+  "name":"余驰宇律师 | 跨境投资法律实务",
+  "url":"https://chiryyu.com",
+  "description":"中国执业律师，专注东南亚与东欧跨境投资法律实务",
+  "potentialAction":{{"@type":"SearchAction","target":"https://chiryyu.com/articles/?q={{search_term_string}}","query-input":"required name=search_term_string"}}
+}}
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-title">余驰宇<span>律师</span></a>
+    <nav class="site-nav"><a href="/" class="active">首页</a><a href="/articles/">文章</a><a href="/cambodia-lawyer.html">柬埔寨律师</a><a href="/about.html">关于</a></nav>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>跨境投资法律<span>实务</span></h1>
+  <p class="subtitle">中国执业律师，大成律师事务所。深耕柬埔寨、泰国、马来西亚、罗马尼亚等国跨境投资法律实务，牵头当地律所中国业务部，专注中资企业海外财产保护、重大诉讼/仲裁、税务问题处理、跨境保全与执行。</p>
+  <div class="regions">
+    <span class="region-tag">柬埔寨</span><span class="region-tag">泰国</span><span class="region-tag">马来西亚</span><span class="region-tag">罗马尼亚</span><span class="region-tag">越南</span><span class="region-tag">印尼</span>
+  </div>
+  <div class="stats">
+    <span>{total} 篇专业文章</span><span>覆盖 {regions_count} 个司法辖区</span><span>100万+ 字深度分析</span>
+  </div>
+</section>
+
+<section class="service-intro">
+  <h2>服务领域</h2>
+  <div class="service-grid">
+    <div class="service-item"><strong>跨境投资架构</strong><p>ODI备案、外资准入审查、控股架构设计、双边税收协定筹划</p></div>
+    <div class="service-item"><strong>海外公司治理</strong><p>公司设立、劳动法合规、股权代持风险排查、BOI/QIP申请</p></div>
+    <div class="service-item"><strong>税务与转让定价</strong><p>跨境税务筹划、转让定价文档、税务稽查应对、全球最低税评估</p></div>
+    <div class="service-item"><strong>争议解决</strong><p>国际仲裁（SIAC/HKIAC/ICC）、跨境诉讼保全、裁决承认与执行</p></div>
+    <div class="service-item"><strong>数据与合规</strong><p>PDPA/GDPR/PDP合规、数据跨境传输、反洗钱AML体系建设</p></div>
+    <div class="service-item"><strong>房地产与工程</strong><p>外国人购房合规、FIDIC合同谈判、工程款纠纷、施工许可</p></div>
+  </div>
+</section>
+
+<section class="region-navigator">
+  <h2 class="section-title">按法域浏览</h2>
+  <div class="region-card-grid">
+{region_nav}  </div>
+</section>
+
+<main class="main-content">
+  <h2 class="section-title">最新文章</h2>
+{latest_html}  <p style="text-align:center;margin-top:2rem;">
+    <a href="/articles/" style="color:var(--gold-dark);text-decoration:none;font-weight:600;">查看全部 {total} 篇文章 →</a>
+  </p>
+</main>
+
+<footer class="site-footer">
+  <p>© 2026 余驰宇律师 · <a href="/">chiryyu.com</a></p>
+  <p style="margin-top:0.5rem;">📞 <a href="tel:+8615201911206">15201911206</a> · 微信 chiry003</p>
+</footer>
+</body>
+</html>''')
+print('  ✅ index.html (首页)')
 
 # ===== robots.txt =====
 with open(os.path.join(SITE_DIR, 'robots.txt'), 'w') as fh:

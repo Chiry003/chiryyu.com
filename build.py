@@ -727,20 +727,73 @@ def generate_faq_schema(faq):
     ])
     return f'<script type="application/ld+json">\n{{\n  "@context":"https://schema.org",\n  "@type":"FAQPage",\n  "mainEntity":[\n{items}\n  ]\n}}\n</script>\n'
 
-def generate_related_html(related_slugs, all_files, all_meta):
-    """Generate related articles HTML."""
-    html = '<nav class="related-articles"><h2>相关文章</h2><ul>\n'
+def generate_related_html(related_slugs, all_files, all_meta, current_file, region, tag, limit=5):
+    """Generate related articles HTML with auto-supplement from same region/tag."""
+    seen = set(related_slugs)
+
+    # First collect manual related
+    items = []
     for slug in related_slugs:
-        # Find the matching article
         for fname, meta in all_meta.items():
             if meta.get('slug') == slug:
                 path = os.path.join(ARTICLES_DIR, fname)
                 if os.path.exists(path):
                     with open(path, 'r', encoding='utf-8') as fh:
                         title = fh.readline().replace('# ', '').strip()
-                    html += f'  <li><a href="/articles/{slug}.html">{title}</a></li>\n'
+                    items.append((slug, title))
                 break
+
+    # Auto-supplement: same region + same tag, excluding current article
+    if len(items) < limit:
+        auto_candidates = []
+        for fname, meta in all_meta.items():
+            mslug = meta.get('slug', '')
+            if mslug in seen or fname == current_file:
+                continue
+            score = 0
+            if meta.get('region') == region:
+                score += 2
+            if meta.get('tag') == tag:
+                score += 1
+            if score > 0:
+                auto_candidates.append((score, mslug, fname))
+        auto_candidates.sort(key=lambda x: x[0], reverse=True)
+        for score, mslug, fname in auto_candidates:
+            if len(items) >= limit: break
+            if mslug in seen: continue
+            seen.add(mslug)
+            path = os.path.join(ARTICLES_DIR, fname)
+            if os.path.exists(path):
+                with open(path, 'r', encoding='utf-8') as fh:
+                    title = fh.readline().replace('# ', '').strip()
+                items.append((mslug, title))
+
+    if not items: return ''
+    html = '<nav class="related-articles"><h2>相关文章</h2><ul>\n'
+    for slug, title in items:
+        html += f'  <li><a href="/articles/{slug}.html">{title}</a></li>\n'
     html += '</ul></nav>\n'
+    return html
+
+
+def generate_tldr(desc, faq):
+    """Generate TL;DR key points from article description and FAQ."""
+    points = []
+    # Point 1: from description
+    if desc:
+        points.append(desc.rstrip('。'))
+
+    # Points 2-3: from first two FAQ answers (summarized)
+    for i, (q, a) in enumerate(faq[:2]):
+        # Truncate long answers to ~80 chars
+        short_a = a[:80].rstrip('。') + '……' if len(a) > 80 else a
+        points.append(f'<strong>{q}</strong>：{short_a}')
+
+    if not points: return ''
+    html = '<div class="article-tldr"><h3>核心要点</h3><ol>\n'
+    for p in points:
+        html += f'  <li>{p}</li>\n'
+    html += '</ol></div>\n'
     return html
 
 def md_to_html(text):
@@ -887,6 +940,7 @@ var _hmt = _hmt || [];
   </header>
   <div class="article-body">
 <div class="article-summary">{desc}</div>
+{tldr}
 {toc}
 {body}
 {related}
@@ -948,20 +1002,22 @@ for f in files:
     toc = extract_toc(body_normalized)
     toc_html = generate_toc_html(toc)
     faq_schema = generate_faq_schema(faq)
-    related_html = generate_related_html(related, files, META)
+    related_html = generate_related_html(related, files, META, f, region, tag, limit=5)
+    tldr_html = generate_tldr(desc, faq)
     body_html = md_to_html(body_md)
 
     html = HTML_ARTICLE.format(
         title=title, desc=desc, region=region, tag=tag,
         date=date, last_updated=LAST_UPDATED, slug=slug, cover=cover, readtime=readtime,
-        toc=toc_html, body=body_html,
+        tldr=tldr_html, toc=toc_html, body=body_html,
         faq_schema=faq_schema, related=related_html,
     )
 
     out = os.path.join(ARTICLES_OUT, f'{slug}.html')
     with open(out, 'w', encoding='utf-8') as fh:
         fh.write(html)
-    print(f'  ✅ {slug}.html (FAQ:{len(faq)} 内链:{len(related)})')
+    actual_related = related_html.count('<li>')
+    print(f'  ✅ {slug}.html (FAQ:{len(faq)} TL;DR✓ 内链:{actual_related})')
 
 
 # ===== Articles Index =====
@@ -1190,6 +1246,9 @@ urls = [
     ('https://chiryyu.com/cambodia-lawyer.html', 'weekly', '0.9', '2026-08-17'),
     ('https://chiryyu.com/thailand-lawyer.html', 'weekly', '0.9', '2026-08-17'),
     ('https://chiryyu.com/malaysia-lawyer.html', 'weekly', '0.9', '2026-08-17'),
+    ('https://chiryyu.com/vietnam-lawyer.html', 'weekly', '0.9', '2026-08-17'),
+    ('https://chiryyu.com/indonesia-lawyer.html', 'weekly', '0.9', '2026-08-17'),
+    ('https://chiryyu.com/romania-lawyer.html', 'weekly', '0.9', '2026-08-17'),
     ('https://chiryyu.com/crossborder-lawyer.html', 'weekly', '0.9', '2026-08-17'),
     ('https://chiryyu.com/articles/', 'weekly', '0.9', '2026-06-22'),
 ]

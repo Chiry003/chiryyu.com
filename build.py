@@ -1149,7 +1149,21 @@ var _hmt = _hmt || [];
     <img src="/images/avatar.png" alt="余驰宇律师" class="author-avatar" width="80" height="80">
     <div class="author-info">
       <strong>余驰宇</strong>，中国执业律师，大成律师事务所，牵头柬埔寨、泰国、马来西亚、罗马尼亚等国当地律所的中国业务部。专注中资企业海外财产保护、重大诉讼/仲裁、税务问题处理、跨境保全与执行。
-      <div class="author-contact">📞 <a href="tel:+8615201911206">15201911206</a> · 微信 chiry003</div>
+    </div>
+  </div>
+  <div class="consult-card" id="wechat-cta">
+    <div class="consult-title">遇到类似法律问题？欢迎咨询余驰宇律师</div>
+    <div class="consult-body">
+      <div class="consult-qr">
+        <img src="/images/wechat-qr.png" alt="扫码添加余驰宇律师微信" width="130" height="130" loading="lazy">
+        <span>扫码添加微信</span>
+      </div>
+      <div class="consult-info">
+        <p><strong>余驰宇律师</strong> · 中国执业律师（大成律师事务所）</p>
+        <p>📞 <a href="tel:+8615201911206" onclick="typeof gtag!=='undefined'&&gtag('event','click_tel',{{'event_category':'cta','event_label':'article'}})">15201911206</a>（微信同号）</p>
+        <p>微信 ID：chiry003</p>
+        <p class="consult-note">初步沟通不收取费用 · 中文 / English</p>
+      </div>
     </div>
   </div>
 </article>
@@ -1159,6 +1173,11 @@ var _hmt = _hmt || [];
   <p style="margin-top:0.5rem;">📞 <a href="tel:+8615201911206">15201911206</a> · 微信 chiry003</p>
   <p style="margin-top:0.3rem;"><a href="/articles/">← 返回文章列表</a></p>
 </footer>
+
+<div class="sticky-contact">
+  <a href="tel:+8615201911206" class="sticky-btn sticky-tel" onclick="typeof gtag!=='undefined'&&gtag('event','click_tel',{{'event_category':'cta','event_label':'sticky'}})">📞 电话咨询</a>
+  <a href="#wechat-cta" class="sticky-btn sticky-wechat">💬 微信咨询</a>
+</div>
 
 </body>
 </html>'''
@@ -1335,10 +1354,30 @@ function switchView(e,view) {{
   else{{document.getElementById('region-view').style.display='none';document.getElementById('tag-view').style.display='block'}}
 }}
 </script>
+<section class="consult-section" id="wechat-cta">
+  <h2>跨境投资法律咨询</h2>
+  <p class="consult-sub">柬埔寨 · 泰国 · 马来西亚 · 罗马尼亚 · 越南 · 印尼 —— 中资出海企业的法律伙伴</p>
+  <div class="consult-body">
+    <div class="consult-qr">
+      <img src="/images/wechat-qr.png" alt="扫码添加余驰宇律师微信" width="150" height="150" loading="lazy">
+      <span>扫码添加微信</span>
+    </div>
+    <div class="consult-info">
+      <p><strong>余驰宇律师</strong> · 中国执业律师（大成律师事务所）</p>
+      <p>📞 <a href="tel:+8615201911206" onclick="typeof gtag!=='undefined'&&gtag('event','click_tel',{{'event_category':'cta','event_label':'articles'}})">15201911206</a>（微信同号）</p>
+      <p>微信 ID：chiry003</p>
+      <p class="consult-note">初步沟通不收取费用 · 中文 / English</p>
+    </div>
+  </div>
+</section>
 <footer class="site-footer">
   <p>© 2026 余驰宇律师 · <a href="/">chiryyu.com</a></p>
   <p style="margin-top:0.5rem;">📞 <a href="tel:+8615201911206">15201911206</a> · 微信 chiry003</p>
 </footer>
+<div class="sticky-contact">
+  <a href="tel:+8615201911206" class="sticky-btn sticky-tel" onclick="typeof gtag!=='undefined'&&gtag('event','click_tel',{{'event_category':'cta','event_label':'sticky'}})">📞 电话咨询</a>
+  <a href="#wechat-cta" class="sticky-btn sticky-wechat">💬 微信咨询</a>
+</div>
 </body>
 </html>''')
 print('  ✅ articles/index.html')
@@ -1442,15 +1481,32 @@ var _hmt = _hmt || [];
     <li>OECD转让定价指南（2022年版）</li>
   </ul>
   <h2>联系方式</h2>
-  <p>📞 电话：<a href="tel:+8615201911206">15201911206</a></p>
-  <p>💬 微信：<strong>chiry003</strong></p>
-  <p>网站：<a href="https://shanghai.dacheng.com/lawyer_1/43.html">大成律师事务所</a></p>
+  <div class="consult-card" id="wechat-cta">
+    <div class="consult-title">跨境投资法律咨询</div>
+    <div class="consult-body">
+      <div class="consult-qr">
+        <img src="/images/wechat-qr.png" alt="扫码添加余驰宇律师微信" width="140" height="140" loading="lazy">
+        <span>扫码添加微信</span>
+      </div>
+      <div class="consult-info">
+        <p><strong>余驰宇律师</strong> · 中国执业律师（大成律师事务所）</p>
+        <p>📞 电话：<a href="tel:+8615201911206" onclick="typeof gtag!=='undefined'&&gtag('event','click_tel',{{'event_category':'cta','event_label':'about'}})">15201911206</a>（微信同号）</p>
+        <p>💬 微信 ID：chiry003</p>
+        <p>网站：<a href="https://shanghai.dacheng.com/lawyer_1/43.html">大成律师事务所律师主页</a></p>
+        <p class="consult-note">初步沟通不收取费用 · 中文 / English</p>
+      </div>
+    </div>
+  </div>
   <p style="margin-top:1rem;font-size:0.9rem;color:var(--gray-500);"><a href="/cambodia-lawyer.html">柬埔寨律师专题页</a> · <a href="https://www.cambodiainvestment.gov.kh/" target="_blank" rel="noopener">CDC官网</a> · <a href="https://www.boi.go.th/" target="_blank" rel="noopener">BOI官网</a> · <a href="https://www.mida.gov.my/" target="_blank" rel="noopener">MIDA官网</a></p>
 </main>
 <footer class="site-footer">
   <p>© 2026 余驰宇律师 · <a href="/">chiryyu.com</a></p>
   <p style="margin-top:0.5rem;">📞 <a href="tel:+8615201911206">15201911206</a> · 微信 chiry003</p>
 </footer>
+<div class="sticky-contact">
+  <a href="tel:+8615201911206" class="sticky-btn sticky-tel" onclick="typeof gtag!=='undefined'&&gtag('event','click_tel',{{'event_category':'cta','event_label':'sticky'}})">📞 电话咨询</a>
+  <a href="#wechat-cta" class="sticky-btn sticky-wechat">💬 微信咨询</a>
+</div>
 </body>
 </html>''')
 print('  ✅ about.html')
@@ -1620,10 +1676,33 @@ with open(os.path.join(SITE_DIR, 'index.html'), 'w', encoding='utf-8') as fh:
   </p>
 </main>
 
+<section class="consult-section" id="wechat-cta">
+  <h2>跨境投资法律咨询</h2>
+  <p class="consult-sub">柬埔寨 · 泰国 · 马来西亚 · 罗马尼亚 · 越南 · 印尼 —— 中资出海企业的法律伙伴</p>
+  <div class="consult-body">
+    <div class="consult-qr">
+      <img src="/images/wechat-qr.png" alt="扫码添加余驰宇律师微信" width="150" height="150" loading="lazy">
+      <span>扫码添加微信</span>
+    </div>
+    <div class="consult-info">
+      <p><strong>余驰宇律师</strong> · 中国执业律师（大成律师事务所）</p>
+      <p>📞 <a href="tel:+8615201911206" onclick="typeof gtag!=='undefined'&&gtag('event','click_tel',{{'event_category':'cta','event_label':'home'}})">15201911206</a>（微信同号）</p>
+      <p>微信 ID：chiry003</p>
+      <p class="consult-note">初步沟通不收取费用 · 中文 / English</p>
+      <p class="consult-note"><a href="/about.html">关于余驰宇律师 →</a></p>
+    </div>
+  </div>
+</section>
+
 <footer class="site-footer">
   <p>© 2026 余驰宇律师 · <a href="/">chiryyu.com</a></p>
   <p style="margin-top:0.5rem;">📞 <a href="tel:+8615201911206">15201911206</a> · 微信 chiry003</p>
 </footer>
+
+<div class="sticky-contact">
+  <a href="tel:+8615201911206" class="sticky-btn sticky-tel" onclick="typeof gtag!=='undefined'&&gtag('event','click_tel',{{'event_category':'cta','event_label':'sticky'}})">📞 电话咨询</a>
+  <a href="#wechat-cta" class="sticky-btn sticky-wechat">💬 微信咨询</a>
+</div>
 </body>
 </html>''')
 print('  ✅ index.html (首页)')

@@ -348,6 +348,67 @@ body {
 .author-contact { margin-top: 0.4rem; color: var(--gray-400); font-size: 0.85rem; }
 .author-contact a { color: var(--gold-light); text-decoration: none; }
 
+/* ===== Consultation CTA ===== */
+.consult-card {
+  max-width: var(--max-width); margin: 1.5rem auto 0;
+  padding: 1.6rem 1.8rem;
+  background: var(--off-white);
+  border: 1px solid var(--gray-100);
+  border-left: 4px solid var(--gold);
+  border-radius: 10px;
+}
+.consult-title {
+  font-size: 1.05rem; font-weight: 800; color: var(--navy);
+  margin-bottom: 1rem;
+}
+.consult-body {
+  display: flex; gap: 1.5rem; align-items: center;
+}
+.consult-qr {
+  display: flex; flex-direction: column; align-items: center; gap: 0.35rem;
+  flex-shrink: 0;
+}
+.consult-qr img {
+  border: 3px solid var(--gold); border-radius: 10px;
+  background: #fff; padding: 4px;
+}
+.consult-qr span { font-size: 0.8rem; color: var(--gray-500); }
+.consult-qr-inline { margin: 0 auto 1rem; }
+.consult-info { font-size: 0.92rem; line-height: 1.9; color: var(--gray-800); }
+.consult-info strong { color: var(--navy); }
+.consult-info a { color: var(--gold-dark); font-weight: 700; text-decoration: none; }
+.consult-note { color: var(--gray-500); font-size: 0.82rem; margin-top: 0.3rem; }
+.consult-note a { color: var(--gold-dark); }
+
+.consult-section {
+  max-width: var(--max-width); margin: 4rem auto 0;
+  padding: 2.5rem 2rem;
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-light) 100%);
+  border-radius: 12px;
+  color: var(--white);
+  text-align: center;
+}
+.consult-section h2 { color: var(--white); font-size: 1.4rem; margin-bottom: 0.4rem; }
+.consult-sub { color: var(--gray-200); font-size: 0.9rem; margin-bottom: 1.8rem; opacity: 0.9; }
+.consult-section .consult-body { justify-content: center; }
+.consult-section .consult-info { color: var(--gray-200); text-align: left; }
+.consult-section .consult-info strong { color: var(--gold); }
+.consult-section .consult-info a { color: var(--gold-light); }
+.consult-section .consult-note { color: var(--gray-400); }
+
+/* ===== Sticky Mobile Contact ===== */
+.sticky-contact {
+  display: none;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 200;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+}
+.sticky-contact a {
+  flex: 1; text-align: center; padding: 0.8rem 0;
+  font-size: 1rem; font-weight: 700; text-decoration: none;
+}
+.sticky-tel { background: var(--navy); color: var(--gold); }
+.sticky-wechat { background: var(--gold); color: var(--navy); }
+
 /* ===== Related Articles ===== */
 .related-articles {
   margin-top: 2.5rem; padding-top: 1.5rem;
@@ -411,6 +472,9 @@ body {
   .article-body strong { color: #E8E6E0; }
   .about-hero { background: #0A1520; }
   .service-intro h2 { color: #E8E6E0; }
+  .consult-card { background: #19212B; border-color: #2A303A; }
+  .consult-card .consult-title, .consult-card .consult-info strong { color: #E8E6E0; }
+  .consult-card .consult-info { color: #B0ADA8; }
 }
 
 /* ===== Responsive ===== */
@@ -427,6 +491,12 @@ body {
   .article-body h2 { font-size: 1.1rem; }
   .service-grid { grid-template-columns: 1fr; }
   .author-bio { flex-direction: column; align-items: center; text-align: center; }
+  .consult-body { flex-direction: column; gap: 1rem; }
+  .consult-info { text-align: center; }
+  .consult-section .consult-info { text-align: center; }
+  .consult-section { padding: 2rem 1.2rem; margin: 3rem 1rem 0; }
+  .sticky-contact { display: flex; }
+  body { padding-bottom: 3.2rem; }
 }
 
 @media (max-width: 400px) {
@@ -438,7 +508,10 @@ body {
 /* ===== Print ===== */
 @media print {
   .site-header, .site-footer, .hero, .article-toc, .article-cover { display: none; }
+  .sticky-contact { display: none !important; }
   .article-body { max-width: 100%; font-size: 12pt; }
   .author-bio { background: #f9f9f9; border: 1px solid #ccc; color: #333; break-inside: avoid; }
   .author-bio * { color: #333 !important; }
+  .consult-card { background: #fff; border: 1px solid #ccc; break-inside: avoid; }
+  .consult-card * { color: #333 !important; }
 }

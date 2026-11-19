@@ -397,8 +397,12 @@ var _hmt = _hmt || [];
     </a>
   </section>
 
-  <section style="max-width:900px;margin:0 auto;padding:2rem 1rem;text-align:center;">
+  <section class="consult-section" id="wechat-cta" style="max-width:900px;margin:0 auto;padding:2rem 1rem;text-align:center;">
     <h2>联系柬埔寨律师余驰宇</h2>
+    <div class="consult-qr consult-qr-inline">
+      <img src="/images/wechat-qr.png" alt="扫码添加余驰宇律师微信" width="140" height="140" loading="lazy">
+      <span>扫码添加微信</span>
+    </div>
     <p style="color:var(--gray-300);font-size:1.1rem;margin:1rem 0;">
       如果您正在考虑或已经在柬埔寨投资，欢迎直接联系我。<br>
       第一次电话咨询（30分钟内）免费。
@@ -414,5 +418,9 @@ var _hmt = _hmt || [];
   <p style="margin-top:0.5rem;">📞 <a href="tel:+8615201911206">15201911206</a> · 微信 chiry003</p>
 </footer>
 
+<div class="sticky-contact">
+  <a href="tel:+8615201911206" class="sticky-btn sticky-tel" onclick="typeof gtag!=='undefined'&&gtag('event','click_tel',{'event_category':'cta','event_label':'sticky'})">📞 电话咨询</a>
+  <a href="#wechat-cta" class="sticky-btn sticky-wechat">💬 微信咨询</a>
+</div>
 </body>
 </html>

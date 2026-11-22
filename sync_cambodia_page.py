@@ -77,7 +77,7 @@ new_section = f'''  <section style="max-width:900px;margin:0 auto;padding:2rem 1
     <h2 style="text-align:center;margin-bottom:2rem;">柬埔寨投资法律文章 · {count}篇</h2>
     <p style="text-align:center;color:var(--gray-400);margin-bottom:2rem;">以下是余驰宇律师撰写的全部柬埔寨法律深度分析文章，每篇均基于一手法律实务经验与真实案例</p>
 
-''' + '\n'.join(cards) + '\n\n  '
+''' + '\n'.join(cards) + '\n\n  </section>\n\n  '
 
 html = open(f'{SITE}/cambodia-lawyer.html', encoding='utf-8').read()
 

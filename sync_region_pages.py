@@ -57,7 +57,7 @@ for page, regions in PAGES:
     sec_start = html.rindex('<section', 0, h2_idx)
     end = html.index('<section class="consult-section"')
     new_h2 = f'<h2 style="text-align:center;margin-bottom:2rem;">{m.group(0).split(">")[-1].split("·")[0].strip()} · {count}篇</h2>'
-    new_section = f'  <section style="max-width:900px;margin:0 auto;padding:2rem 1rem;">\n    {new_h2}\n\n' + '\n'.join(cards) + '\n\n  '
+    new_section = f'  <section style="max-width:900px;margin:0 auto;padding:2rem 1rem;">\n    {new_h2}\n\n' + '\n'.join(cards) + '\n\n  </section>\n\n  '
     html = html[:sec_start] + new_section + html[end:]
 
     # update counts in meta tags and stats text

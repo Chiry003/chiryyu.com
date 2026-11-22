@@ -1656,13 +1656,13 @@ for date, slug, region, tag, desc, fname in latest_5:
 
 # Region nav cards
 LAWYER_PAGES = [
-    ('柬埔寨', '36篇', '/cambodia-lawyer.html', 'QIP申请、土地法、税务、劳动法、经济特区'),
-    ('泰国', '11篇', '/thailand-lawyer.html', 'BOI申请、税务争议、代持化解、PDPA、M&A'),
-    ('马来西亚', '13篇', '/malaysia-lawyer.html', 'JS-SEZ、数据中心、并购管制、PDPA、AMLA'),
-    ('罗马尼亚', '10篇', '/romania-lawyer.html', '欧盟资金、GDPR、可再生能源、乌克兰重建'),
-    ('越南', '7篇', '/vietnam-lawyer.html', '外资准入、数据本地化、税务转让定价、VIAC'),
-    ('印尼', '3篇', '/indonesia-lawyer.html', 'Omnibus综合法、IKN新首都、PDP数据保护'),
-    ('跨境投资', '6篇', '/crossborder-lawyer.html', 'ODI备案、税务筹划、FIDIC工程、国际仲裁'),
+    ('柬埔寨', f"{len(region_groups.get('柬埔寨', []))}篇", '/cambodia-lawyer.html', 'QIP申请、土地法、税务、劳动法、经济特区'),
+    ('泰国', f"{len(region_groups.get('泰国', []))}篇", '/thailand-lawyer.html', 'BOI申请、税务争议、代持化解、PDPA、M&A'),
+    ('马来西亚', f"{len(region_groups.get('马来西亚', []))}篇", '/malaysia-lawyer.html', 'JS-SEZ、数据中心、并购管制、PDPA、AMLA'),
+    ('罗马尼亚', f"{len(region_groups.get('罗马尼亚', []))}篇", '/romania-lawyer.html', '欧盟资金、GDPR、可再生能源、乌克兰重建'),
+    ('越南', f"{len(region_groups.get('越南', []))}篇", '/vietnam-lawyer.html', '外资准入、数据本地化、税务转让定价、VIAC'),
+    ('印尼', f"{len(region_groups.get('印尼', []))}篇", '/indonesia-lawyer.html', 'Omnibus综合法、IKN新首都、PDP数据保护'),
+    ('跨境投资', f"{len(region_groups.get('跨境', [])) + len(region_groups.get('东盟', []))}篇", '/crossborder-lawyer.html', 'ODI备案、税务筹划、FIDIC工程、国际仲裁'),
 ]
 region_nav = ''
 for name, count, url, topics in LAWYER_PAGES:

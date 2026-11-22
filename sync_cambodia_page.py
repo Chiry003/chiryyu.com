@@ -81,12 +81,11 @@ new_section = f'''  <section style="max-width:900px;margin:0 auto;padding:2rem 1
 
 html = open(f'{SITE}/cambodia-lawyer.html', encoding='utf-8').read()
 
-html = html.replace('<strong style="color:var(--gold);font-size:1.2rem;">36篇深度文章</strong>',
-                    f'<strong style="color:var(--gold);font-size:1.2rem;">{count}篇深度文章</strong>')
-html = html.replace('已发布36篇柬埔寨投资法律深度分析文章', f'已发布{count}篇柬埔寨投资法律深度分析文章')
-html = html.replace('已发布36篇柬埔寨法律深度文章', f'已发布{count}篇柬埔寨法律深度文章')
-html = html.replace('36篇深度文章 + 真实案例', f'{count}篇深度文章 + 真实案例')
-html = html.replace('36篇深度文章覆盖柬埔寨投资全领域', f'{count}篇深度文章覆盖柬埔寨投资全领域')
+html = re.sub(r'已发布\d+篇柬埔寨投资法律深度分析文章', f'已发布{count}篇柬埔寨投资法律深度分析文章', html)
+html = re.sub(r'已发布\d+篇柬埔寨法律深度文章', f'已发布{count}篇柬埔寨法律深度文章', html)
+html = re.sub(r'\d+篇柬埔寨法律深度文章', f'{count}篇柬埔寨法律深度文章', html)
+html = re.sub(r'\d+篇深度文章', f'{count}篇深度文章', html)
+html = re.sub(r'柬埔寨投资法律文章 · \d+篇', f'柬埔寨投资法律文章 · {count}篇', html)
 
 h2_anchor = html.index('<h2 style="text-align:center;margin-bottom:2rem;">柬埔寨投资法律文章')
 sec_start = html.rindex('<section', 0, h2_anchor)
